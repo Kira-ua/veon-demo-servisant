@@ -7,7 +7,7 @@ const pages = ["Про нас", "Наші роботи", "Гарантія", "Д
   <div class="container footer__grid">
     <div class="footer__brand">
       <a class="footer__logo" href="#top" aria-label="Servisant, на початок сторінки">
-        <img src="/logo-servisant.png" width="300" height="73" alt="Servisant" decoding="async" />
+        <img src={`${(import.meta.env.BASE_URL + "/").replace("//", "/")}logo-servisant.png`} width="300" height="73" alt="Servisant" decoding="async" />
       </a>
       <p class="muted">Приватне підприємство «Сервісант», Львів і Львівська область.</p>
     </div>

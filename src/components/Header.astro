@@ -14,7 +14,7 @@ const nav = [
 <header class="site-header" data-header>
   <div class="container site-header__bar">
     <a class="site-header__logo" href="#top" aria-label="Servisant, на початок сторінки">
-      <img src="/logo-servisant.png" width="300" height="73" alt="Servisant" />
+      <img src={`${(import.meta.env.BASE_URL + "/").replace("//", "/")}logo-servisant.png`} width="300" height="73" alt="Servisant" />
     </a>
 
     <nav class="site-header__nav" aria-label="Розділи сторінки">
