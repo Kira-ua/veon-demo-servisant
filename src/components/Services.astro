@@ -1,0 +1,120 @@
+---
+import Icon from "./Icon.astro";
+import FutureLink from "./FutureLink.astro";
+import { phones } from "../data/client";
+
+// Situations, heaviest first (S1 → S4); services and their contents from products_services[1–3], business_lines[2].
+const rows = [
+  {
+    situation: "Котел зупинився або показує помилку",
+    service: "Аварійний ремонт і діагностика",
+    text: "Ремонт і діагностика газового обладнання: гарантійні та післягарантійні випадки. Сервісна лінія приймає дзвінки цілодобово.",
+    size: "xl",
+  },
+  {
+    situation: "Купили новий котел",
+    service: "Перший гарантійний пуск",
+    text: "Введення в експлуатацію, налаштування котла й автоматики, перший гарантійний пуск котлів і колонок.",
+    size: "l",
+  },
+  {
+    situation: "Час планового обслуговування",
+    service: "ТО і сервісні договори",
+    text: "Технічне обслуговування котлів і колонок, сервісні договори, обслуговування котелень, промивка теплообмінників.",
+    size: "m",
+  },
+  {
+    situation: "Будуєте чи міняєте опалення",
+    service: "Монтаж",
+    text: "Монтаж систем опалення та водопостачання, котлів і колонок, налаштування автоматики керування.",
+    size: "m",
+  },
+];
+---
+<section id="services" class="services" data-rec="R-004" aria-labelledby="services-title">
+  <div class="container">
+    <div class="section-head">
+      <h2 id="services-title">Що сталося з котлом?</h2>
+      <p class="muted">Знайдіть свою ситуацію: на кожну відповідає сервісна лінія. Вартість робіт уточнять по телефону.</p>
+    </div>
+
+    <ol class="rows">
+      {rows.map((r, i) => (
+        <li class:list={["row", `row--${r.size}`]} data-reveal style={`--reveal-delay:${i * 60}ms`}>
+          <h3 class="row__situation">{r.situation}</h3>
+          <div class="row__body">
+            <p class="row__service">{r.service}</p>
+            <p class="row__text muted">{r.text}</p>
+          </div>
+          <div class="row__actions">
+            {r.size === "xl" ? (
+              <a class="row__call" href={phones.service.href}>
+                <span class="row__call-label">Сервіс цілодобово</span>
+                <span class="row__call-number num">{phones.service.label}</span>
+                <Icon name="arrow" size={22} class="row__arrow" />
+              </a>
+            ) : (
+              <a class="ilink row__tel" href={phones.service.href}>
+                <Icon name="phone" size={18} />
+                <span>Сервіс: <span class="num">{phones.service.label}</span></span>
+              </a>
+            )}
+            <FutureLink class="row__more">Детальніше</FutureLink>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .services { padding-block: var(--s-6) var(--s-6); }
+  .rows { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--color-text); }
+  .row {
+    display: grid; gap: var(--s-2);
+    padding-block: var(--s-4);
+    border-bottom: 1px solid var(--color-line);
+  }
+  .row__situation { font-size: var(--fs-4); max-width: 18ch; }
+  .row--xl .row__situation { font-size: var(--fs-5); }
+  .row__body { display: grid; gap: var(--s-1); max-width: 48ch; }
+  .row__service { font-weight: 600; font-size: var(--fs-3); line-height: 1.25; }
+  .row__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-1) var(--s-3); }
+  .row__call {
+    display: inline-grid; grid-template-columns: auto auto; align-items: center; column-gap: var(--s-2);
+    min-height: var(--tap); padding: .75rem var(--s-2);
+    color: var(--color-text); text-decoration: none;
+    border: 1.5px solid var(--color-accent); border-radius: var(--radius);
+    transition: background-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+  }
+  .row__call-label { grid-column: 1; font-size: var(--fs-1); color: var(--color-muted); transition: color var(--dur-fast) var(--ease-out); }
+  .row__call-number { grid-column: 1; font-family: var(--font-display); font-weight: 800; font-size: var(--fs-3); line-height: 1.05; white-space: nowrap; }
+  .row__call :global(.row__arrow) { grid-column: 2; grid-row: 1 / span 2; color: var(--color-accent); transition: transform var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out); }
+  .row__call:hover { background: var(--color-accent); color: var(--color-accent-ink); }
+  .row__call:hover .row__call-label, .row__call:hover :global(.row__arrow) { color: var(--color-accent-ink); }
+  .row__call:hover :global(.row__arrow) { transform: translateX(4px); }
+  .row__call:active { transform: scale(.98); }
+  .row__more { font-size: var(--fs-1); color: var(--color-muted); }
+  .row__tel { font-weight: 600; white-space: nowrap; }
+
+  .row--xl .row__call { background: var(--color-accent); color: var(--color-accent-ink); }
+  .row--xl .row__call-label, .row--xl .row__call :global(.row__arrow) { color: var(--color-accent-ink); }
+  .row--xl .row__call:hover { background: var(--color-accent-hover); }
+
+  @media (min-width: 1024px) {
+    .services { padding-block: var(--s-6) var(--s-6); }
+    .row {
+      grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); align-items: start;
+      padding-block: var(--s-5);
+    }
+    .row--xl { padding-block: var(--s-5) var(--s-6); }
+    .row__situation { grid-column: 1 / span 5; }
+    .row__body { grid-column: 6 / span 4; padding-top: .4em; }
+    .row__actions { grid-column: 10 / span 3; flex-direction: column; align-items: flex-start; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .row__call:hover :global(.row__arrow) { transform: none; }
+    .row__call:active { transform: none; }
+  }
+</style>

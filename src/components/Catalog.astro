@@ -1,0 +1,121 @@
+---
+import Icon from "./Icon.astro";
+import FutureLink from "./FutureLink.astro";
+import { phones, telegram } from "../data/client";
+
+// S-F004 (category counts) and products_services[4–5] (gas boilers by brand and price range, parts brands).
+const small = [
+  { count: 14, name: "Очищення води" },
+  { count: 9, name: "Кондиціонери й теплові насоси" },
+  { count: 3, name: "Програматори й термостати" },
+  { count: 2, name: "Стабілізатори напруги" },
+  { count: 1, name: "Насосне обладнання" },
+];
+---
+<section id="catalog" class="catalog" data-rec="R-007,R-011" aria-labelledby="catalog-title">
+  <div class="container">
+    <div class="section-head">
+      <h2 id="catalog-title">Котли, запчастини та обладнання</h2>
+      <p class="muted">Магазин при сервісі: котел звідси змонтує й запустить наш сервіс. Підбір і наявність підкаже відділ продажу.</p>
+    </div>
+
+    <div class="shelf">
+      <article class="tile tile--boilers">
+        <p class="tile__count num" aria-hidden="true">12</p>
+        <h3 class="tile__name">Газові котли <span class="visually-hidden">: 12 моделей</span></h3>
+        <p class="tile__price"><span class="num">від 28 912</span> до <span class="num">119 600 грн</span></p>
+        <ul class="tile__split" aria-label="Газові котли за брендами">
+          <li><span>Buderus</span><span class="num">9</span></li>
+          <li><span>Viessmann</span><span class="num">2</span></li>
+          <li><span>Airfel</span><span class="num">1</span></li>
+        </ul>
+        <p class="tile__note">Монтаж і гарантійний пуск робить наш сервіс.</p>
+        <FutureLink class="tile__more">Дивитися котли</FutureLink>
+      </article>
+
+      <article class="tile tile--parts">
+        <p class="tile__count num" aria-hidden="true">59</p>
+        <h3 class="tile__name">Запчастини <span class="visually-hidden">: 59 позицій</span></h3>
+        <p class="tile__text">Оригінальні запчастини для котлів Ariston, Beretta, Bosch/Junkers, Termet, Buderus, Vaillant, Viessmann.</p>
+        <FutureLink class="tile__more">Дивитися запчастини</FutureLink>
+      </article>
+
+      <ul class="shelf__small">
+        {small.map((c) => (
+          <li class="mini">
+            <span class="mini__count num" aria-hidden="true">{c.count}</span>
+            <h3 class="mini__name">{c.name}<span class="visually-hidden">: {c.count}</span></h3>
+            <FutureLink class="mini__more">Відкрити</FutureLink>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="catalog__cta" data-rec="R-003">
+      <p class="catalog__cta-text">Підібрати котел чи запчастину</p>
+      <div class="catalog__cta-actions">
+        <a class="btn catalog__sales" href={phones.sales.href}><Icon name="phone" size={20} /><span>Відділ продажу <span class="num">{phones.sales.label}</span></span></a>
+        <a class="btn btn--outline" href={telegram.href} target="_blank" rel="noopener"><Icon name="telegram" size={20} /><span>{telegram.label}</span></a>
+        <FutureLink>Весь каталог</FutureLink>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .catalog { background: var(--color-surface); padding-block: var(--s-6); }
+  .shelf { display: grid; gap: var(--s-2); }
+  .tile {
+    display: grid; gap: var(--s-2); align-content: start;
+    padding: var(--s-3); background: var(--color-bg); border-radius: var(--radius);
+  }
+  .tile__count {
+    font-family: var(--font-display); font-weight: 800; font-size: var(--fs-6); line-height: .85;
+    color: var(--color-text);
+  }
+  .tile__name { font-size: var(--fs-4); }
+  .tile__price { font-size: var(--fs-3); font-weight: 600; }
+  .tile__split { list-style: none; margin: 0; padding: 0; display: grid; border-top: 1px solid var(--color-line); }
+  .tile__split li { display: flex; justify-content: space-between; padding-block: var(--s-1); border-bottom: 1px solid var(--color-line); }
+  .tile__note, .tile__text { color: var(--color-muted); max-width: 40ch; }
+  .tile :global(.tile__more) { justify-self: start; }
+
+  .shelf__small { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--s-2); }
+  .mini {
+    display: grid; gap: var(--s-1); align-content: start;
+    padding: var(--s-2); border: 1px solid var(--color-line-ui); border-radius: var(--radius);
+  }
+  .mini__count { font-family: var(--font-display); font-weight: 800; font-size: var(--fs-4); line-height: 1; }
+  .mini__name { font-family: var(--font-body); font-weight: 600; font-size: var(--fs-2); line-height: 1.3; }
+  .mini :global(.mini__more) { font-size: var(--fs-1); color: var(--color-muted); }
+
+  .catalog__cta {
+    display: grid; gap: var(--s-2); margin-top: var(--s-5);
+    padding-top: var(--s-3); border-top: 1px solid var(--color-text);
+  }
+  .catalog__cta-text { font-family: var(--font-display); font-weight: 800; font-size: var(--fs-4); line-height: 1; }
+  .catalog__cta-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-1) var(--s-2); }
+  .catalog__sales { white-space: nowrap; background: var(--color-field); color: var(--color-on-field); }
+  .catalog__sales:hover { background: var(--color-muted); }
+
+  @media (max-width: 767px) {
+    .mini:last-child:nth-child(odd) { grid-column: 1 / -1; }
+  }
+  @media (min-width: 768px) {
+    .shelf { grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--gutter); }
+    .tile--boilers { grid-column: 1 / span 7; }
+    .tile--parts { grid-column: 8 / span 5; }
+    .shelf__small { grid-column: 1 / -1; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: var(--gutter); }
+    .tile { padding: var(--s-4); }
+  }
+  @media (min-width: 1024px) {
+    .catalog { padding-block: var(--s-6); }
+    .catalog__cta { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); align-items: center; }
+    .catalog__cta-text { grid-column: 1 / span 5; }
+    .catalog__cta-actions { grid-column: 6 / span 7; justify-content: flex-end; }
+  }
+  @media (max-width: 359px) {
+    .shelf__small { grid-template-columns: minmax(0, 1fr); }
+    .mini:last-child:nth-child(odd) { grid-column: auto; }
+  }
+</style>

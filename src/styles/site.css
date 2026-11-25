@@ -1,0 +1,89 @@
+/* Servisant: shared components (buttons, flame, FutureLink, fields). Colours and fonts only through tokens.css. */
+html { overflow-x: clip; scrollbar-color: var(--color-line-ui) var(--color-surface); }
+body { overflow-x: clip; }
+::selection { background: var(--color-signal); color: var(--color-text); }
+h1, h2, h3 { margin: 0; font-family: var(--font-display); font-weight: 800; line-height: var(--lh-display); letter-spacing: 0; }
+p { margin: 0; }
+.container { width: min(100% - 2 * var(--space), var(--container)); }
+.num { font-variant-numeric: tabular-nums; }
+
+/* Dark fields (hero, contacts) */
+.field { background: var(--color-field); color: var(--color-on-field); }
+.field :focus-visible { outline-color: var(--color-focus-on-field); }
+.field .muted { color: var(--color-muted-on-field); }
+.muted { color: var(--color-muted); }
+
+/* Section heading row */
+.section-head { display: grid; gap: var(--s-2); margin-bottom: var(--s-5); }
+.section-head h2 { font-size: var(--fs-5); max-width: 16ch; }
+.section-head p { max-width: 46ch; font-size: var(--fs-3); line-height: 1.4; }
+
+@media (min-width: 1024px) {
+  .section-head { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); align-items: end; }
+  .section-head h2 { grid-column: 1 / span 7; }
+  .section-head p { grid-column: 8 / span 5; }
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--s-1);
+  min-height: var(--tap); padding: .75rem var(--s-3);
+  font: 600 var(--fs-2)/1.2 var(--font-body); text-decoration: none; text-align: center;
+  border-radius: var(--radius); border: 1.5px solid transparent; cursor: pointer; white-space: nowrap;
+  transition: background-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+}
+.btn .icon { flex: none; transition: transform var(--dur-fast) var(--ease-out); }
+.btn:active { transform: scale(.98); }
+.btn--primary { background: var(--color-accent); color: var(--color-accent-ink); }
+.btn--primary:hover { background: var(--color-accent-hover); }
+.btn--primary:hover .icon { transform: translateX(2px); }
+.btn--outline { background: transparent; color: var(--color-text); border-color: var(--color-line-ui); }
+.btn--outline:hover { border-color: var(--color-text); background: var(--color-surface); }
+.field .btn--outline { color: var(--color-on-field); border-color: var(--color-muted-on-field); }
+.field .btn--outline:hover { border-color: var(--color-on-field); background: var(--color-line-on-field); }
+.btn--white { background: var(--color-accent-ink); color: var(--color-text); }
+.btn--white:hover { background: var(--color-surface); }
+.btn--white:hover .icon { transform: translateX(2px); }
+
+/* Text link with an icon (tel, messenger, map) */
+.ilink {
+  display: inline-flex; align-items: center; gap: var(--s-1); min-height: var(--tap);
+  color: inherit; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .25em;
+  border-radius: var(--radius);
+  transition: text-decoration-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+.ilink .icon { flex: none; transition: transform var(--dur-fast) var(--ease-out); }
+.ilink:hover { text-decoration-thickness: 2px; }
+.ilink:hover .icon { transform: translateX(2px); }
+
+/* Flame («запальник») */
+.flame { flex: none; fill: var(--color-signal); }
+.flame .flame__core { fill: var(--color-accent); }
+.field .flame .flame__core { fill: var(--color-field); }
+.flame--live { animation: flame-breathe 900ms var(--ease-in-out) 400ms 3; }
+@keyframes flame-breathe { 0%, 100% { opacity: 1; } 50% { opacity: .55; } }
+
+/* FutureLink: dashed underline and a note on hover and focus */
+.future-link {
+  min-height: var(--tap); gap: var(--s-1);
+  color: inherit; text-decoration: none; border-radius: var(--radius);
+}
+.future-link__text { text-decoration: underline dashed 1px; text-underline-offset: .3em; text-decoration-color: currentColor; opacity: .85; }
+.future-link:hover .future-link__text, .future-link:focus-visible .future-link__text { opacity: 1; }
+.future-link__note[aria-hidden="true"] { font-family: var(--font-body); font-weight: 600; font-size: var(--fs-1); background: var(--color-text); color: var(--color-bg); }
+.field .future-link__note[aria-hidden="true"] { background: var(--color-bg); color: var(--color-text); }
+
+/* Reveal: lighter on phones; global.css hides only under .js */
+.js [data-reveal]:not(.is-visible) { transform: translateY(12px); }
+@media (max-width: 767px) {
+  [data-reveal] { transition-delay: 0ms; }
+}
+@media (min-width: 768px) {
+  .js [data-reveal]:not(.is-visible) { transform: translateY(16px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flame--live { animation: none; }
+  .btn:active { transform: none; }
+  .btn:hover .icon, .ilink:hover .icon { transform: none; }
+}

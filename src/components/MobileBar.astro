@@ -1,0 +1,49 @@
+---
+import Flame from "./Flame.astro";
+import Icon from "./Icon.astro";
+import { phones, viber } from "../data/client";
+---
+<div class="mbar" data-mobile-bar data-rec="R-002">
+  <a class="mbar__call" href={phones.service.href}>
+    <Flame size={14} />
+    <span>Сервіс 24/7</span>
+    <span class="num mbar__num">{phones.service.label}</span>
+  </a>
+  <a class="mbar__viber" href={viber.href} aria-label="Viber сервісу"><Icon name="viber" /></a>
+</div>
+
+<style>
+  .mbar { display: none; }
+  @media (max-width: 1023px) {
+    :global(.js) .mbar {
+      position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
+      display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--s-1);
+      padding: var(--s-1) var(--space) calc(var(--s-1) + env(safe-area-inset-bottom));
+      background: var(--color-field); border-top: 1px solid var(--color-line-on-field);
+      transform: translateY(110%);
+      transition: transform 280ms var(--ease-out);
+    }
+    :global(.js) .mbar:global(.is-shown) { transform: none; }
+  }
+  .mbar__call {
+    display: flex; align-items: center; justify-content: center; gap: var(--s-1);
+    min-height: 3.25rem; padding-inline: var(--s-2);
+    background: var(--color-accent); color: var(--color-accent-ink); border-radius: var(--radius);
+    font-weight: 600; text-decoration: none; white-space: nowrap;
+    transition: background-color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+  }
+  .mbar__call:active { transform: scale(.98); background: var(--color-accent-hover); }
+  .mbar__num { font-family: var(--font-display); font-weight: 800; font-size: var(--fs-3); }
+  .mbar__viber {
+    display: inline-grid; place-items: center; width: 3.25rem; height: 3.25rem;
+    color: var(--color-on-field); border: 1.5px solid var(--color-muted-on-field); border-radius: var(--radius);
+    transition: background-color var(--dur-fast) var(--ease-out);
+  }
+  .mbar__viber:active { background: var(--color-line-on-field); }
+  .mbar :focus-visible { outline-color: var(--color-focus-on-field); }
+  @media (max-width: 359px) { .mbar__num { display: none; } }
+  @media (prefers-reduced-motion: reduce) {
+    :global(.js) .mbar, :global(.js) .mbar:global(.is-shown) { transition: none; }
+    .mbar__call:active { transform: none; }
+  }
+</style>

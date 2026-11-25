@@ -1,0 +1,67 @@
+/* Hallmark · shape: service-line · genre: modern-minimal · theme: custom · job: hire · idea: "Запальник, що не гасне: сервісна лінія, що горить завжди" · vibe: "терміново, ясно, по-львівськи, надійно, технічно"
+ * paper: #FFFFFF · surface: absolute · accent: #D61523 · display: Sofia Sans Condensed · body: Onest · hero: номер 24/7 як головна кнопка і живий час у Львові на темно-синьому полі · nav: біла липка шапка, 5 якорів і номер сервісу · footer: компактний білий, логотип, телефони, майбутні сторінки · imagery: none · signature: величезний номер у червоному блоці й живий час Львова
+ * axes: light/display-condensed/warm · posture: committed · contrast: pass · fold: pass · v2.0.0 */
+/* Hallmark · pre-emit critique: P4 H5 E4 S4 R4 V4 · weakest: E (no photography), the number, the live time and the shelf numbers carry the page instead of images */
+/* Hallmark · waive 7b · --color-bg, --color-accent-ink, --color-on-field #FFFFFF · white enamel is the approved palette of design/concept.md (veon-concept colors, 8.9: bg #FFFFFF, on-primary #FFFFFF); the boiler-casing grey #EEF1F5 carries the tint */
+/* Hallmark · waive 23 · posture: committed, the red number block is the hero CTA · the red Servisant call block with the 24/7 number is the signature of the approved concept (design/concept.md 5, decisions.md), not decoration */
+/* Hallmark · answered F4 · .btn--white is the same primary action inverted on the single red warranty field, where a red button cannot sit; one filled recipe per surface */
+/* Client design tokens: from design/concept.md (veon-concept, 8.3, 8.9). Every colour and font of the page goes through these. */
+:root {
+  /* colour roles */
+  --color-bg: #FFFFFF;
+  --color-surface: #EEF1F5;
+  --color-text: #151734;
+  --color-field: #151734;
+  --color-muted: #4A4F6A;
+  --color-muted-on-field: #A9AECB;
+  --color-accent: #D61523;
+  --color-accent-hover: #B0101C;
+  --color-accent-ink: #FFFFFF;
+  --color-on-field: #FFFFFF;
+  --color-signal: #F7A600;
+  --color-line: #C9CEDA;
+  --color-line-ui: #8A90A8;
+  --color-line-on-field: #3A3D63;
+  --color-focus: #151734;
+  --color-focus-on-field: #F7A600;
+  --color-focus-on-accent: #FFFFFF;
+
+  /* type */
+  --font-display: "Sofia Sans Condensed Variable", "Sofia Fallback", "Arial Narrow", sans-serif;
+  --font-body: "Onest Variable", "Onest Fallback", Arial, sans-serif;
+  /* 6-step scale: 390 → 1440 (14/16/20/28/40/52 → 14/17/24/40/72/144) */
+  --fs-1: 0.875rem;
+  --fs-2: clamp(1rem, 0.977rem + 0.095vw, 1.0625rem);
+  --fs-3: clamp(1.25rem, 1.157rem + 0.381vw, 1.5rem);
+  --fs-4: clamp(1.75rem, 1.471rem + 1.143vw, 2.5rem);
+  --fs-5: clamp(2.5rem, 1.757rem + 3.048vw, 4.5rem);
+  --fs-6: clamp(3.25rem, 1.114rem + 8.762vw, 9rem);
+  --lh-display: 0.98;
+  --lh-text: 1.55;
+
+  /* spacing rhythm (8) */
+  --s-1: 0.5rem;
+  --s-2: 1rem;
+  --s-3: 1.5rem;
+  --s-4: 2.5rem;
+  --s-5: 4rem;
+  --s-6: 6.5rem;
+  --s-7: 10rem;
+
+  /* grid */
+  --container: 1320px;
+  --gutter: 1.5rem;
+  --space: clamp(1.25rem, 0.786rem + 1.905vw, 2.5rem);
+  --tap: 3rem;
+  --radius: 4px;
+  --header-h: 4.5rem;
+
+  /* motion */
+  --ease-out: cubic-bezier(.2, .7, .2, 1);
+  --ease-in-out: cubic-bezier(.45, 0, .55, 1);
+  --dur: 500ms;
+  --dur-fast: 180ms;
+}
+@media (min-width: 1024px) {
+  :root { --header-h: 5rem; }
+}

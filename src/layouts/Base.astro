@@ -1,0 +1,60 @@
+---
+// Cyrillic display file: standard (Ukrainian) letterforms, made by scripts/patch-cyrillic-font.py from the package file.
+import sofiaCyr from "../assets/fonts/servisant-display-cyrillic.woff2?url";
+import sofiaLat from "@fontsource-variable/sofia-sans-condensed/files/sofia-sans-condensed-latin-wght-normal.woff2?url";
+import onestCyr from "@fontsource-variable/onest/files/onest-cyrillic-wght-normal.woff2?url";
+import onestLat from "@fontsource-variable/onest/files/onest-latin-wght-normal.woff2?url";
+
+interface Props { lang: string; title: string; description: string; canonical?: string; ogImage?: string; }
+const { lang, title, description, canonical, ogImage } = Astro.props;
+
+// Self-hosted variable fonts (SIL OFL, via @fontsource-variable), only the cyrillic and latin subsets.
+const cyr = "U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116";
+const lat = "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD";
+const fontCss = `
+@font-face{font-family:"Sofia Sans Condensed Variable";font-style:normal;font-display:swap;font-weight:100 900;src:url(${sofiaCyr}) format("woff2");unicode-range:${cyr}}
+@font-face{font-family:"Sofia Sans Condensed Variable";font-style:normal;font-display:swap;font-weight:100 900;src:url(${sofiaLat}) format("woff2");unicode-range:${lat}}
+@font-face{font-family:"Onest Variable";font-style:normal;font-display:swap;font-weight:100 900;src:url(${onestCyr}) format("woff2");unicode-range:${cyr}}
+@font-face{font-family:"Onest Variable";font-style:normal;font-display:swap;font-weight:100 900;src:url(${onestLat}) format("woff2");unicode-range:${lat}}
+@font-face{font-family:"Sofia Fallback";src:local("Arial Narrow"),local("ArialNarrow"),local("Arial");size-adjust:92%;ascent-override:96%;descent-override:24%;line-gap-override:0%}
+@font-face{font-family:"Onest Fallback";src:local("Arial"),local("Helvetica");size-adjust:101%;ascent-override:96%;descent-override:25%;line-gap-override:0%}
+`;
+---
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <script is:inline>document.documentElement.classList.add("js")</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {canonical && <link rel="canonical" href={canonical} />}
+    <meta name="robots" content="noindex" />
+    <meta name="theme-color" content="#151734" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preload" href={sofiaCyr} as="font" type="font/woff2" crossorigin />
+    <style is:inline set:html={fontCss}></style>
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="uk_UA" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    {ogImage && <meta property="og:image" content={ogImage} />}
+    {ogImage && <meta property="og:image:width" content="1200" />}
+    {ogImage && <meta property="og:image:height" content="630" />}
+    <meta name="twitter:card" content="summary_large_image" />
+    <slot name="head" />
+    <style is:global>
+      @import "../styles/tokens.css";
+      @import "../styles/global.css";
+      @import "../styles/site.css";
+    </style>
+  </head>
+  <body id="top">
+    <a class="skip-link" href="#main">{lang.startsWith("uk") ? "До змісту" : lang.startsWith("ru") ? "К содержанию" : "Skip to content"}</a>
+    <slot name="header" />
+    <main id="main"><slot /></main>
+    <slot name="footer" />
+    <script src="../scripts/reveal.ts"></script>
+    <script src="../scripts/live.ts"></script>
+  </body>
+</html>

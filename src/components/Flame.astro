@@ -1,0 +1,10 @@
+---
+// «Запальник»: the small flame mark from the logo, next to the service number (signature, concept.md §4).
+// `live` lets it breathe three times after load (effect 1); reduced motion keeps it still.
+interface Props { live?: boolean; size?: number; class?: string; }
+const { live = false, size = 18, class: cls } = Astro.props;
+---
+<svg class:list={["flame", { "flame--live": live }, cls]} width={size} height={Math.round(size * 1.3)} viewBox="0 0 20 26" aria-hidden="true" focusable="false">
+  <path d="M10 1c.6 4.2 3.4 6 5.6 8.9A8.6 8.6 0 0 1 10 25a8.4 8.4 0 0 1-6.9-12.6c.7 1.9 1.9 3 3.3 3.4C5.3 11 7.6 6.6 10 1Z" />
+  <path class="flame__core" d="M10.4 13c1.9 2 3.5 3.6 3.5 6.1a3.9 3.9 0 0 1-7.8 0c0-1.8 1-3 1.9-3.7 0 1 .5 1.8 1.2 2.1-.3-1.6.2-3.1 1.2-4.5Z" />
+</svg>

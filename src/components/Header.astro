@@ -1,0 +1,139 @@
+---
+import Flame from "./Flame.astro";
+import Icon from "./Icon.astro";
+import { phones, viber } from "../data/client";
+
+const nav = [
+  { href: "#services", label: "Сервіс" },
+  { href: "#warranty", label: "Гарантія" },
+  { href: "#brands", label: "Бренди" },
+  { href: "#catalog", label: "Каталог" },
+  { href: "#contacts", label: "Контакти" },
+];
+---
+<header class="site-header" data-header>
+  <div class="container site-header__bar">
+    <a class="site-header__logo" href="#top" aria-label="Servisant, на початок сторінки">
+      <img src="/logo-servisant.png" width="300" height="73" alt="Servisant" />
+    </a>
+
+    <nav class="site-header__nav" aria-label="Розділи сторінки">
+      <ul>
+        {nav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+      </ul>
+    </nav>
+
+    <a class="site-header__phone" href={phones.service.href} data-rec="R-002">
+      <Flame live size={16} />
+      <span class="site-header__phone-text">
+        <span class="site-header__number">{phones.service.label}</span>
+        <span class="site-header__hint">сервіс цілодобово</span>
+      </span>
+    </a>
+
+    <a class="site-header__call" href={phones.service.href} data-rec="R-002" aria-label={`Подзвонити в сервіс цілодобово, ${phones.service.label}`}>
+      <Icon name="phone" />
+    </a>
+
+    <details class="menu" data-menu>
+      <summary class="menu__toggle" aria-label="Меню">
+        <Icon name="menu" class="menu__open" />
+        <Icon name="close" class="menu__close" />
+      </summary>
+      <div class="menu__panel">
+        <nav aria-label="Розділи сторінки, мобільне меню">
+          <ul class="menu__list">
+            {nav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+          </ul>
+        </nav>
+        <div class="menu__actions" data-rec="R-003">
+          <a class="btn btn--primary" href={phones.service.href}><Icon name="phone" size={20} /><span>Сервіс {phones.service.label}</span></a>
+          <a class="btn btn--outline" href={phones.sales.href}><span>Продаж {phones.sales.label}</span></a>
+          <a class="btn btn--outline" href={viber.href}><Icon name="viber" size={20} /><span>{viber.label}</span></a>
+        </div>
+      </div>
+    </details>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--color-bg);
+    border-bottom: 1px solid var(--color-line);
+  }
+  .site-header__bar {
+    display: flex; align-items: center; gap: var(--s-2);
+    min-height: var(--header-h);
+  }
+  .site-header__logo { display: block; flex: none; margin-right: auto; padding-block: var(--s-1); border-radius: var(--radius); }
+  .site-header__logo img { width: 132px; height: auto; }
+
+  .site-header__nav { display: none; }
+  .site-header__nav ul { display: flex; gap: var(--s-1); list-style: none; margin: 0; padding: 0; }
+  .site-header__nav a {
+    display: inline-flex; align-items: center; min-height: var(--tap); padding-inline: var(--s-2);
+    font-size: var(--fs-2); font-weight: 600; text-decoration: none; color: var(--color-text);
+    border-radius: var(--radius);
+    background-image: linear-gradient(var(--color-accent), var(--color-accent));
+    background-repeat: no-repeat; background-position: var(--s-2) calc(100% - 10px); background-size: 0 2px;
+    transition: background-size var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+  }
+  .site-header__nav a:hover { background-size: calc(100% - 2 * var(--s-2)) 2px; }
+
+  .site-header__phone { display: none; }
+  .site-header__phone {
+    align-items: center; gap: var(--s-1); padding: var(--s-1) var(--s-2); min-height: var(--tap);
+    text-decoration: none; color: var(--color-text); border-radius: var(--radius);
+    transition: background-color var(--dur-fast) var(--ease-out);
+  }
+  .site-header__phone:hover { background: var(--color-surface); }
+  .site-header__phone-text { display: grid; line-height: 1.1; }
+  .site-header__number { font-family: var(--font-display); font-weight: 800; font-size: var(--fs-3); font-variant-numeric: tabular-nums; }
+  .site-header__hint { font-size: var(--fs-1); color: var(--color-muted); }
+
+  .site-header__call {
+    display: inline-grid; place-items: center; width: var(--tap); height: var(--tap); flex: none;
+    background: var(--color-accent); color: var(--color-accent-ink); border-radius: var(--radius);
+    transition: background-color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+  }
+  .site-header__call:hover { background: var(--color-accent-hover); }
+  .site-header__call:active { transform: scale(.96); }
+
+  .menu { flex: none; }
+  .menu__toggle {
+    display: inline-grid; place-items: center; width: var(--tap); height: var(--tap);
+    list-style: none; cursor: pointer; color: var(--color-text);
+    border: 1.5px solid var(--color-line-ui); border-radius: var(--radius);
+    transition: background-color var(--dur-fast) var(--ease-out);
+  }
+  .menu__toggle::-webkit-details-marker { display: none; }
+  .menu__toggle:hover { background: var(--color-surface); }
+  .menu__toggle :global(.icon) { grid-area: 1 / 1; }
+  .menu__toggle :global(.menu__close) { opacity: 0; }
+  .menu[open] .menu__toggle :global(.menu__close) { opacity: 1; }
+  .menu[open] .menu__toggle :global(.menu__open) { opacity: 0; }
+  .menu__panel {
+    position: absolute; left: 0; right: 0; top: 100%;
+    background: var(--color-bg); border-bottom: 1px solid var(--color-line);
+    padding: var(--s-2) var(--space) var(--s-4);
+    max-height: calc(100dvh - var(--header-h)); overflow-y: auto;
+  }
+  .menu:not([open]) .menu__panel { display: none; }
+  .menu__list { list-style: none; margin: 0 0 var(--s-3); padding: 0; }
+  .menu__list a {
+    display: flex; align-items: center; min-height: 3.5rem;
+    font-family: var(--font-display); font-weight: 800; font-size: var(--fs-4); line-height: 1;
+    text-decoration: none; color: var(--color-text);
+    border-bottom: 1px solid var(--color-line);
+  }
+  .menu__actions { display: grid; gap: var(--s-1); }
+  .menu__actions .btn { white-space: nowrap; }
+
+  @media (min-width: 1024px) {
+    .site-header__logo img { width: 156px; }
+    .site-header__nav { display: block; }
+    .site-header__phone { display: inline-flex; }
+    .site-header__call, .menu { display: none; }
+  }
+</style>

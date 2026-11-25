@@ -1,0 +1,65 @@
+---
+import Icon from "./Icon.astro";
+import FutureLink from "./FutureLink.astro";
+import { phones, viber } from "../data/client";
+---
+<section id="warranty" class="warranty" data-rec="R-005" aria-labelledby="warranty-title" data-reveal>
+  <div class="warranty__clip">
+  <div class="container warranty__grid">
+    <h2 id="warranty-title" class="warranty__title">Гарантія починається з першого пуску</h2>
+    <figure class="warranty__rule">
+      <blockquote>
+        <p>Гарантія на обладнання надається за умови першого запуску котла авторизованим сервісним центром.</p>
+      </blockquote>
+    </figure>
+    <div class="warranty__aside">
+      <p class="warranty__note">Servisant — авторизований сервісний центр. Запишіться на пуск, щойно котел змонтовано.</p>
+      <div class="warranty__actions">
+        <a class="btn btn--white" href={phones.service.href}><Icon name="phone" size={20} /><span>Записатися на пуск</span></a>
+        <a class="btn warranty__viber" href={viber.href}><Icon name="viber" size={20} /><span>{viber.label}</span></a>
+      </div>
+      <FutureLink class="warranty__more">Умови гарантії</FutureLink>
+    </div>
+  </div>
+  </div>
+</section>
+
+<style>
+  .warranty__clip {
+    background: var(--color-accent); color: var(--color-accent-ink);
+    padding-block: var(--s-5);
+  }
+  .warranty :focus-visible { outline-color: var(--color-focus-on-accent); }
+  .warranty__grid { display: grid; gap: var(--s-3); }
+  .warranty__title { font-size: var(--fs-3); font-family: var(--font-body); font-weight: 600; line-height: 1.3; }
+  .warranty__rule { margin: 0; }
+  .warranty__rule blockquote { margin: 0; }
+  .warranty__rule p {
+    font-family: var(--font-display); font-weight: 800; font-size: var(--fs-5); line-height: var(--lh-display);
+    max-width: 28ch;
+  }
+  .warranty__aside { display: grid; gap: var(--s-3); align-content: start; }
+  .warranty__note { font-size: var(--fs-3); line-height: 1.35; max-width: 32ch; }
+  .warranty__actions { display: flex; flex-wrap: wrap; gap: var(--s-1); }
+  .warranty__viber { color: var(--color-accent-ink); border-color: var(--color-accent-ink); background: transparent; }
+  .warranty__viber:hover { background: var(--color-accent-hover); }
+  .warranty :global(.warranty__more) { justify-self: start; }
+
+  /* Effect 4: the red field opens from the left once (clip-path on the inner field, the section stays observable). */
+  :global(.js) .warranty[data-reveal]:not(.is-visible) { opacity: 1; transform: none; }
+  :global(.js) .warranty .warranty__clip { transition: clip-path 500ms var(--ease-out); }
+  :global(.js) .warranty:not(:global(.is-visible)) .warranty__clip { clip-path: inset(0 100% 0 0); }
+
+  @media (min-width: 1024px) {
+    .warranty__clip { padding-block: var(--s-6); }
+    :global(.js) .warranty .warranty__clip { transition-duration: 700ms; }
+    .warranty__grid { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); row-gap: var(--s-4); }
+    .warranty__title { grid-column: 1 / -1; }
+    .warranty__rule { grid-column: 1 / span 8; }
+    .warranty__aside { grid-column: 9 / span 4; align-self: end; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :global(.js) .warranty .warranty__clip, :global(.js) .warranty:not(:global(.is-visible)) .warranty__clip { clip-path: none; transition: none; }
+  }
+</style>

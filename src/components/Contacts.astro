@@ -1,0 +1,89 @@
+---
+import Flame from "./Flame.astro";
+import Icon from "./Icon.astro";
+import { phones, viber, telegram, instagram, email, address, officeHours } from "../data/client";
+---
+<section id="contacts" class="contacts field" data-rec="R-008" aria-labelledby="contacts-title">
+  <div class="container">
+    <h2 id="contacts-title" class="contacts__title">Контакти</h2>
+
+    <div class="contacts__grid" data-rec="R-003">
+      <div class="col col--service">
+        <h3 class="col__title"><Flame live size={18} /><span>Сервіс — цілодобово</span></h3>
+        <p class="col__hint muted">Пуск, ТО, ремонт, аварійний виклик</p>
+        <ul class="col__list">
+          <li><a class="col__phone num" href={phones.service.href}>{phones.service.label}</a></li>
+          <li><a class="col__phone num" href={phones.service2.href}>{phones.service2.label}</a></li>
+          <li><a class="ilink" href={viber.href}><Icon name="viber" size={20} /><span>{viber.label}</span></a></li>
+        </ul>
+      </div>
+
+      <div class="col">
+        <h3 class="col__title"><span>Відділ продажу</span></h3>
+        <p class="col__hint muted">Котли, запчастини, обладнання, монтаж</p>
+        <ul class="col__list">
+          <li><a class="col__phone num" href={phones.sales.href}>{phones.sales.label}</a></li>
+          <li><a class="ilink" href={telegram.href} target="_blank" rel="noopener"><Icon name="telegram" size={20} /><span>{telegram.label} {telegram.handle}</span></a></li>
+        </ul>
+      </div>
+
+      <div class="col">
+        <h3 class="col__title"><span>Офіс</span></h3>
+        <p class="col__status" data-office-status hidden>
+          <span data-office-text></span>
+        </p>
+        <ul class="col__list">
+          <li><a class="col__phone col__phone--s num" href={phones.office.href}>{phones.office.label}</a><span class="muted col__sub">тел./факс</span></li>
+          <li><a class="ilink" href={email.href}><Icon name="mail" size={20} /><span>{email.label}</span></a></li>
+          <li class="col__address">
+            <span>{address.city}, {address.street}</span>
+            <span class="muted">{address.note}</span>
+          </li>
+          <li><a class="ilink" href={address.map} target="_blank" rel="noopener"><Icon name="route" size={20} /><span>Маршрут у Google Maps</span></a></li>
+          <li><a class="ilink" href={instagram.href} target="_blank" rel="noopener" data-rec="R-022,SMM-R003"><Icon name="instagram" size={20} /><span>{instagram.label} {instagram.handle}</span></a></li>
+        </ul>
+        <p class="col__hours muted">Графік офісу: {officeHours.text}. Сервісна лінія цілодобово.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .contacts { padding-block: var(--s-6); }
+  .contacts__title { font-size: var(--fs-5); margin-bottom: var(--s-5); }
+  .contacts__grid { display: grid; gap: var(--s-5); }
+  .col { display: grid; gap: var(--s-2); align-content: start; padding-top: var(--s-3); border-top: 1px solid var(--color-line-on-field); }
+  .col--service { border-top-color: var(--color-signal); }
+  .col__title { display: flex; align-items: center; gap: var(--s-1); font-size: var(--fs-4); }
+  .col__hint { font-size: var(--fs-1); }
+  .col__list { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--s-1); }
+  .col__list li { min-width: 0; }
+  .col__phone {
+    display: inline-flex; align-items: center; min-height: var(--tap);
+    font-family: var(--font-display); font-weight: 800; font-size: var(--fs-4); line-height: 1;
+    color: var(--color-on-field); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .15em;
+    border-radius: var(--radius);
+  }
+  .col__phone:hover { text-decoration-thickness: 3px; text-decoration-color: var(--color-signal); }
+  .col__phone--s { font-size: var(--fs-3); }
+  .col__sub { margin-left: var(--s-1); font-size: var(--fs-1); }
+  .col__address { display: grid; padding-block: var(--s-1); }
+  .col__status[hidden] { display: none; }
+  .col__status { font-weight: 600; color: var(--color-on-field); }
+  .col__status[data-open="true"] { color: var(--color-signal); }
+  .col__status span { display: inline-block; }
+  :global(.js) .col__status span:global(.is-ticking) { animation: status-tick 240ms var(--ease-out); }
+  @keyframes status-tick { from { opacity: 0; transform: translateY(-40%); } to { opacity: 1; transform: none; } }
+  .col__hours { font-size: var(--fs-1); }
+  .contacts :global(.ilink) { overflow-wrap: anywhere; }
+
+  @media (min-width: 768px) {
+    .contacts__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gutter); }
+  }
+  @media (min-width: 1024px) {
+    .contacts { padding-block: var(--s-6) var(--s-6); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    :global(.js) .col__status span:global(.is-ticking) { animation: none; }
+  }
+</style>

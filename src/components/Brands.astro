@@ -1,0 +1,49 @@
+---
+import { buderusSource, otherAuthorised } from "../data/client";
+---
+<section id="brands" class="brands" data-rec="R-006" aria-labelledby="brands-title">
+  <div class="container">
+    <div class="section-head">
+      <h2 id="brands-title">Бренди, які ми обслуговуємо</h2>
+      <p class="muted">Авторизований сервіс окремо від магазину: тут бренди, котли яких ми запускаємо й ремонтуємо.</p>
+    </div>
+
+    <div class="brands__grid">
+      <div class="brands__lead">
+        <p class="brands__name">Buderus</p>
+        <p class="brands__fact">Servisant у офіційному списку сервіс-партнерів Buderus по Львівській області.</p>
+        <a class="ilink brands__source" href={buderusSource} target="_blank" rel="noopener">Список партнерів на buderus.com</a>
+      </div>
+      <div class="brands__rest">
+        <ul class="brands__list" aria-label="Інші бренди авторизованого сервісу">
+          {otherAuthorised.map((b) => <li>{b}</li>)}
+        </ul>
+        <p class="brands__caption muted">Авторизований сервіс за даними компанії.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .brands { padding-block: var(--s-6); }
+  .brands__grid { display: grid; gap: var(--s-5); }
+  .brands__lead { display: grid; gap: var(--s-2); align-content: start; padding-top: var(--s-3); border-top: 2px solid var(--color-text); }
+  .brands__name { font-family: var(--font-display); font-weight: 800; font-size: var(--fs-6); line-height: .9; }
+  .brands__fact { font-size: var(--fs-3); line-height: 1.35; max-width: 30ch; }
+  .brands__source { justify-self: start; font-weight: 600; white-space: nowrap; }
+  .brands__rest { display: grid; gap: var(--s-2); align-content: start; }
+  .brands__list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--color-line); }
+  .brands__list li {
+    font-family: var(--font-display); font-weight: 800; font-size: var(--fs-4); line-height: 1;
+    padding-block: var(--s-2); border-bottom: 1px solid var(--color-line);
+  }
+  .brands__caption { font-size: var(--fs-1); }
+
+  @media (min-width: 1024px) {
+    .brands { padding-block: var(--s-7) var(--s-6); }
+    .brands__grid { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); }
+    .brands__lead { grid-column: 1 / span 5; }
+    .brands__rest { grid-column: 7 / span 6; padding-top: var(--s-3); }
+    .brands__list li { display: flex; align-items: baseline; padding-block: var(--s-2); }
+  }
+</style>

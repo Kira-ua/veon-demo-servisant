@@ -1,0 +1,79 @@
+---
+import Base from "../layouts/Base.astro";
+import Header from "../components/Header.astro";
+import Hero from "../components/Hero.astro";
+import Services from "../components/Services.astro";
+import Warranty from "../components/Warranty.astro";
+import Brands from "../components/Brands.astro";
+import Catalog from "../components/Catalog.astro";
+import Contacts from "../components/Contacts.astro";
+import Footer from "../components/Footer.astro";
+import MobileBar from "../components/MobileBar.astro";
+import { email, address, instagram, telegram } from "../data/client";
+
+const title = "Сервіс газових котлів у Львові цілодобово — Servisant";
+const description = "Авторизований сервіс газових котлів у Львові та області: перший гарантійний пуск, ТО, ремонт і монтаж. Сервісна лінія цілодобово: 098-498-85-08.";
+
+// Absolute URLs only when the address of the site is known (PUBLIC_SITE_URL at build time); relative otherwise.
+const site = (import.meta.env.PUBLIC_SITE_URL as string | undefined)?.replace(/\/$/, "") ?? "";
+const abs = (p: string) => `${site}${p}`;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "HVACBusiness",
+  name: "Servisant",
+  legalName: "Приватне підприємство «Сервісант»",
+  ...(site ? { url: `${site}/` } : {}),
+  logo: abs("/logo-servisant.png"),
+  image: abs("/og-servisant.png"),
+  telephone: "+380984988508",
+  email: email.label,
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: address.street,
+    addressLocality: address.city,
+    addressRegion: "Львівська область",
+    addressCountry: "UA",
+  },
+  areaServed: [
+    { "@type": "City", name: "Львів" },
+    { "@type": "AdministrativeArea", name: "Львівська область" },
+  ],
+  openingHoursSpecification: [{
+    "@type": "OpeningHoursSpecification",
+    dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+    opens: "10:00",
+    closes: "17:00",
+  }],
+  contactPoint: [
+    {
+      "@type": "ContactPoint",
+      contactType: "technical support",
+      name: "Сервісна лінія",
+      telephone: ["+380984988508", "+380994988508"],
+      hoursAvailable: {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+        opens: "00:00",
+        closes: "23:59",
+      },
+      availableLanguage: "uk",
+    },
+    { "@type": "ContactPoint", contactType: "sales", telephone: "+380982048488", availableLanguage: "uk" },
+    { "@type": "ContactPoint", contactType: "customer service", name: "Офіс", telephone: "+380322428042", availableLanguage: "uk" },
+  ],
+  sameAs: [instagram.href, telegram.href],
+};
+---
+<Base lang="uk" title={title} description={description} canonical={site ? `${site}/` : undefined} ogImage={abs("/og-servisant.png")}>
+  <script slot="head" type="application/ld+json" is:inline data-rec="R-010" set:html={JSON.stringify(jsonLd)} />
+  <Header slot="header" />
+  <Hero />
+  <Services />
+  <Warranty />
+  <Brands />
+  <Catalog />
+  <Contacts />
+  <Footer slot="footer" />
+  <MobileBar slot="footer" />
+</Base>

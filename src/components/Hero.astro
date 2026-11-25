@@ -1,0 +1,143 @@
+---
+import Flame from "./Flame.astro";
+import Icon from "./Icon.astro";
+import { phones, viber, authorisedBrands } from "../data/client";
+---
+<section id="hero" class="hero field" data-rec="R-001,R-009" aria-labelledby="hero-title" data-hero>
+  <div class="container hero__grid">
+    <p class="hero__status" data-live-line>
+      <Flame live size={16} />
+      <span>
+        <span class="hero__time" data-live-time hidden>Зараз <time class="num" data-live-clock>00:00</time> у Львові. </span>Сервісна лінія працює цілодобово
+      </span>
+    </p>
+
+    <div class="hero__main">
+      <h1 id="hero-title" class="hero__title" data-rec="R-001,R-010,R-SEO-02">Авторизований сервіс газових котлів у&nbsp;Львові&nbsp;— цілодобово</h1>
+
+      <a class="callblock" href={phones.service.href} data-rec="R-001,G-R002">
+        <span class="callblock__label">
+          <Icon name="phone" size={22} />
+          <span>Подзвонити в сервіс, цілодобово</span>
+        </span>
+        <span class="callblock__number num">{phones.service.big}</span>
+      </a>
+    </div>
+
+    <div class="hero__side" data-rec="R-003">
+      <div class="hero__alt">
+        <a class="btn btn--outline hero__btn" href={phones.service2.href}><Icon name="phone" size={20} /><span class="hero__btn-num num">{phones.service2.label}</span></a>
+        <a class="btn btn--outline hero__btn" href={viber.href}><Icon name="viber" size={20} /><span>{viber.label}</span></a>
+      </div>
+      <a class="hero__sales" href={phones.sales.href}>
+        <span class="hero__sales-label muted">Підібрати котел у відділі продажу</span>
+        <span class="hero__sales-number num">{phones.sales.label}</span>
+      </a>
+    </div>
+
+    <div class="hero__trust">
+      <p class="hero__trust-label muted">Авторизований сервіс</p>
+      <ul class="hero__brands" aria-label="Бренди авторизованого сервісу">
+        {authorisedBrands.map((b) => <li>{b}</li>)}
+      </ul>
+      <p class="hero__years">понад 10 років на ринку</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero { padding-block: var(--s-3) var(--s-4); }
+  .hero__grid { display: grid; gap: var(--s-3); }
+  .hero__status {
+    display: flex; align-items: center; gap: var(--s-1);
+    font-size: var(--fs-1); font-weight: 600; color: var(--color-signal);
+  }
+  .hero__time { display: inline; }
+  .hero__time[hidden] { display: none; }
+  .hero__time time { display: inline-block; }
+  :global(.js) .hero__time time.is-ticking { animation: tick 240ms var(--ease-out); }
+  @keyframes tick { from { opacity: 0; transform: translateY(-40%); } to { opacity: 1; transform: none; } }
+
+  .hero__main { display: grid; gap: var(--s-3); }
+  .hero__title { font-size: var(--fs-5); max-width: 15ch; }
+
+  .callblock {
+    display: grid; gap: var(--s-1); min-height: 6rem;
+    padding: var(--s-2) var(--s-2) var(--s-2);
+    background: var(--color-accent); color: var(--color-accent-ink);
+    border: 1.5px solid var(--color-accent); border-radius: var(--radius);
+    text-decoration: none;
+    transition: background-color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+  }
+  .callblock:hover { background: var(--color-accent-hover); border-color: var(--color-accent-hover); }
+  .callblock:active { transform: scale(.98); }
+  .callblock:focus-visible { outline-color: var(--color-focus-on-field); outline-offset: 3px; }
+  .callblock__label { display: flex; align-items: center; gap: var(--s-1); font-size: var(--fs-2); font-weight: 600; }
+  .callblock__label :global(.icon) { transition: transform var(--dur-fast) var(--ease-out); }
+  .callblock:hover .callblock__label :global(.icon) { transform: translateX(2px); }
+  .callblock__number {
+    font-family: var(--font-display); font-weight: 800; font-size: var(--fs-6); line-height: .9;
+    white-space: nowrap; letter-spacing: 0;
+  }
+
+  .hero__side { display: grid; gap: var(--s-2); }
+  .hero__alt { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--s-1); }
+  .hero__btn { padding-inline: var(--s-2); }
+  .hero__btn-num { font-family: var(--font-display); font-weight: 800; font-size: var(--fs-3); line-height: 1; white-space: nowrap; }
+  @media (max-width: 359px) { .hero__alt { grid-template-columns: 1fr; } }
+  .hero__sales {
+    display: grid; gap: 2px; padding-block: var(--s-1); min-height: var(--tap);
+    color: var(--color-on-field); text-decoration: none; border-radius: var(--radius);
+  }
+  .hero__sales-label { font-size: var(--fs-1); }
+  .hero__sales-number {
+    font-family: var(--font-display); font-weight: 800; font-size: var(--fs-3);
+    text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .2em;
+  }
+  .hero__sales:hover .hero__sales-number { text-decoration-thickness: 2px; }
+
+  .hero__trust {
+    display: grid; gap: var(--s-1);
+    padding-top: var(--s-3); border-top: 1px solid var(--color-line-on-field);
+  }
+  .hero__trust-label, .hero__years { font-size: var(--fs-1); }
+  .hero__years { color: var(--color-on-field); }
+  .hero__brands { display: flex; flex-wrap: wrap; gap: var(--s-1) var(--s-3); list-style: none; margin: 0; padding: 0; }
+  .hero__brands li { font-family: var(--font-display); font-weight: 800; font-size: var(--fs-3); line-height: 1.1; }
+
+  @media (min-width: 768px) {
+    .hero { padding-block: var(--s-4) var(--s-4); }
+    .callblock { padding: var(--s-3) var(--s-4) var(--s-4); }
+    .hero__side { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: end; }
+  }
+
+  @media (min-width: 1024px) {
+    .hero { padding-block: var(--s-4) var(--s-4); display: grid; min-height: min(calc(100svh - var(--header-h) - 8rem), 46rem); }
+    .hero__grid {
+      align-content: center;
+      grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); row-gap: var(--s-4);
+    }
+    .hero__status { grid-column: 1 / -1; font-size: var(--fs-2); }
+    .hero__main { grid-column: 1 / span 8; gap: var(--s-3); min-width: 0; }
+    .callblock { padding-inline: var(--s-3); }
+    .callblock__number { font-size: min(var(--fs-6), 9.6vw); }
+    .hero__title { max-width: none; }
+    .hero__side { grid-column: 9 / span 4; grid-template-columns: 1fr; align-self: end; gap: var(--s-3); }
+    .hero__alt { grid-template-columns: 1fr; }
+    .hero__btn { justify-content: flex-start; }
+    .hero__sales { padding-top: var(--s-3); border-top: 1px solid var(--color-line-on-field); }
+    .hero__trust {
+      grid-column: 1 / -1; display: flex; align-items: center; flex-wrap: wrap; gap: var(--s-2) var(--s-4);
+      padding-top: var(--s-3);
+    }
+    .hero__brands { gap: 0; }
+    .hero__brands li { padding-inline: var(--s-3); border-left: 1px solid var(--color-line-on-field); }
+    .hero__brands li:first-child { padding-left: 0; border-left: 0; }
+    .hero__years { margin-left: auto; padding-left: var(--s-3); border-left: 1px solid var(--color-line-on-field); font-size: var(--fs-2); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :global(.js) .hero__time time.is-ticking { animation: none; }
+    .callblock:active { transform: none; }
+  }
+</style>

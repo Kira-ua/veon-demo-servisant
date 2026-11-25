@@ -1,0 +1,11 @@
+---
+// A future page that is not built in the demo yet (menu item, button, card, footer link).
+// Inactive element without href and a short note on hover and focus; never points to the client's current site.
+interface Props { note?: string; class?: string; }
+const { note = "Розділ у розробці", class: cls } = Astro.props;
+---
+<span class:list={["future-link", cls]} role="link" aria-disabled="true" tabindex="0">
+  <span class="future-link__text"><slot /></span>
+  <span class="future-link__note" aria-hidden="true">{note}</span>
+  <span class="visually-hidden">({note})</span>
+</span>

@@ -1,0 +1,66 @@
+---
+import FutureLink from "./FutureLink.astro";
+import { phones, telegram, instagram, email } from "../data/client";
+const pages = ["Про нас", "Наші роботи", "Гарантія", "Доставка й оплата", "Політика конфіденційності"];
+---
+<footer class="footer">
+  <div class="container footer__grid">
+    <div class="footer__brand">
+      <a class="footer__logo" href="#top" aria-label="Servisant, на початок сторінки">
+        <img src="/logo-servisant.png" width="300" height="73" alt="Servisant" decoding="async" />
+      </a>
+      <p class="muted">Приватне підприємство «Сервісант», Львів і Львівська область.</p>
+    </div>
+
+    <ul class="footer__phones" aria-label="Телефони">
+      <li><span class="muted">Сервіс цілодобово</span><a class="num" href={phones.service.href}>{phones.service.label}</a></li>
+      <li><span class="muted">Сервіс цілодобово</span><a class="num" href={phones.service2.href}>{phones.service2.label}</a></li>
+      <li><span class="muted">Відділ продажу</span><a class="num" href={phones.sales.href}>{phones.sales.label}</a></li>
+      <li><span class="muted">Офіс</span><a class="num" href={phones.office.href}>{phones.office.label}</a></li>
+    </ul>
+
+    <ul class="footer__links" aria-label="Інші канали">
+      <li><a href={telegram.href} target="_blank" rel="noopener">{telegram.label}</a></li>
+      <li><a href={instagram.href} target="_blank" rel="noopener" data-rec="R-022">{instagram.label}</a></li>
+      <li><a href={email.href}>{email.label}</a></li>
+    </ul>
+
+    <ul class="footer__pages" aria-label="Сторінки сайту">
+      {pages.map((p) => <li><FutureLink>{p}</FutureLink></li>)}
+    </ul>
+  </div>
+</footer>
+
+<style>
+  .footer { padding-block: var(--s-5) calc(var(--s-5) + 4.5rem); border-top: 1px solid var(--color-line); font-size: var(--fs-1); }
+  .footer__grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--s-4) var(--gutter); }
+  .footer__brand, .footer__phones { grid-column: 1 / -1; }
+  .footer .footer__phones { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: var(--gutter); }
+  .footer__brand { display: grid; gap: var(--s-2); align-content: start; }
+  .footer__logo { justify-self: start; border-radius: var(--radius); }
+  .footer__logo img { width: 132px; height: auto; }
+  .footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--s-1); align-content: start; }
+  .footer__phones li { display: grid; }
+  .footer a { display: inline-flex; align-items: center; min-height: 2.75rem; color: var(--color-text); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .2em; border-radius: var(--radius); }
+  .footer a:hover { text-decoration-thickness: 2px; text-decoration-color: var(--color-accent); }
+  .footer__phones a { font-family: var(--font-display); font-weight: 800; font-size: var(--fs-3); min-height: var(--tap); text-decoration: none; }
+  .footer__phones a:hover { text-decoration: underline; }
+  .footer__pages { color: var(--color-muted); }
+  .footer__phones a, .footer__links a { white-space: nowrap; }
+  @media (max-width: 359px) {
+    .footer__grid, .footer .footer__phones { grid-template-columns: minmax(0, 1fr); }
+  }
+  .footer__pages :global(.future-link) { min-height: 2.75rem; }
+
+  @media (min-width: 1024px) {
+    .footer .footer__phones { grid-template-columns: minmax(0, 1fr); }
+  }
+  @media (min-width: 1024px) {
+    .footer { padding-bottom: var(--s-5); }
+    .footer__grid { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); }
+    .footer__brand { grid-column: 1 / span 3; }
+    .footer__phones { grid-column: 4 / span 3; }
+    .footer__links { grid-column: 7 / span 3; }
+    .footer__pages { grid-column: 10 / span 3; }
+  }
+</style>
